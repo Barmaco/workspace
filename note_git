@@ -32,7 +32,7 @@
 	git commit -m "remove"
 	git push -u origin master
 
-常用：	
+常用上传：	
 	git add *
 	git commit -m "normal"
 	git push -u origin master
