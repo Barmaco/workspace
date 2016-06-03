@@ -16,3 +16,13 @@
 	https://github.com/Barmaco/workspace.git
 	
 	git clone https://github.com/Barmaco/workspace.git
+
+
+更新：	
+	git pull
+
+常用：	
+	git add *
+	git commit -m "normal"
+	git push -u origin master
+

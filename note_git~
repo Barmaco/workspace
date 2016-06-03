@@ -1,4 +1,4 @@
-http://www.runoob.com/manual/git-guide/
+	http://www.runoob.com/manual/git-guide/
 上传：
 	root@barmaco-virtual-machine:/home/barmaco/workspace# git init
 	
@@ -16,3 +16,9 @@ http://www.runoob.com/manual/git-guide/
 	https://github.com/Barmaco/workspace.git
 	
 	git clone https://github.com/Barmaco/workspace.git
+
+常用：	
+	git add *
+	git commit -m "normal"
+	git push -u origin master
+
