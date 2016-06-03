@@ -1,0 +1,18 @@
+http://www.runoob.com/manual/git-guide/
+上传：
+	root@barmaco-virtual-machine:/home/barmaco/workspace# git init
+	
+	登陆
+	git config --global user.email "992077171@qq.com"
+	git config --global user.name "barmaco"
+	
+	git add helloredis
+	提交
+	git commit -m "first commit"
+	上传
+	git push -u origin master
+
+下载：
+	https://github.com/Barmaco/workspace.git
+	
+	git clone https://github.com/Barmaco/workspace.git
