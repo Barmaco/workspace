@@ -10,6 +10,7 @@
 	提交
 	git commit -m "first commit"
 	上传
+	git remote add origin https://github.com/Barmaco/hellocpp.git
 	git push -u origin master
 
 下载：
@@ -24,6 +25,12 @@
 
 更新：	
 	git pull
+
+删除：
+	git ls-files
+	git rm *.o
+	git commit -m "remove"
+	git push -u origin master
 
 常用：	
 	git add *

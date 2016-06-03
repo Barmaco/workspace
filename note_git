@@ -26,6 +26,12 @@
 更新：	
 	git pull
 
+删除：
+	git ls-files
+	git rm *.o
+	git commit -m "remove"
+	git push -u origin master
+
 常用：	
 	git add *
 	git commit -m "normal"
