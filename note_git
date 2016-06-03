@@ -10,6 +10,7 @@
 	提交
 	git commit -m "first commit"
 	上传
+	git remote add origin https://github.com/Barmaco/hellocpp.git
 	git push -u origin master
 
 下载：
