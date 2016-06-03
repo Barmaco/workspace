@@ -1,15 +1,19 @@
-CXXFLAGS =	-O2 -g -Wall -fmessage-length=0
+.SUFFIXES:.c .o
 
-OBJS =		helloredis.o
+CC=gcc
+SRCS=03fork.c
 
-LIBS =
+OBJS=$(SRCS:.c=.o)
+#EXEC=$(SRCS:.c=)
+EXEC=hello
 
-TARGET =	helloredis
-
-$(TARGET):	$(OBJS)
-	$(CXX) -o $(TARGET) $(OBJS) $(LIBS)
-
-all:	$(TARGET)
-
+start: $(OBJS)
+	$(CC) -o $(EXEC) $(OBJS)
+	@echo "-------------ok-------------"
+	
+.c.o:
+	$(CC) -o $@ -c $<
+	
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJS)
+	@echo "clean ok"
