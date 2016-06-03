@@ -17,6 +17,10 @@
 	
 	git clone https://github.com/Barmaco/workspace.git
 
+替换本地改动：
+	舍弃当前修改，并更新到服务器的最新版：
+	git checkout -- <filename>
+	git checkout -- *
 
 更新：	
 	git pull
@@ -25,4 +29,7 @@
 	git add *
 	git commit -m "normal"
 	git push -u origin master
+
+
+
 
