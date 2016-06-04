@@ -15,21 +15,16 @@ class FileInfo
 {
 public:
 	bool m_bdir = false;
-	//�ļ����·��
 	std::string FileRelativePath = "";
-	//�ļ���С
 	long FileSize = 0;
-	//�ļ��ϴ��޸�ʱ��
 	std::string LastUpdateTime = "";
-	//���ļ��汾��
 	unsigned int Version = 0;
-	//�ļ�������Щ�仯
 	typedef enum CHANGE_TYPE
 	{
 		CHANGE_TYPE_NONE = 0,
-		CHANGE_TYPE_CHANGE,		//�仯
-		CHANGE_TYPE_ADD,		//����
-		CHANGE_TYPE_DEL			//ɾ��
+		CHANGE_TYPE_CHANGE,
+		CHANGE_TYPE_ADD,
+		CHANGE_TYPE_DEL
 	};
 	CHANGE_TYPE m_echange = CHANGE_TYPE_NONE;
 
@@ -58,7 +53,6 @@ public:
 		return true;
 	}
 
-	//��ͬ���ļ��ж��Ƿ�仯����
 	static bool ischange(FileInfo* fileinfo1, FileInfo* fileinfo2)
 	{
 		if (issamefile(fileinfo1, fileinfo2))
@@ -95,23 +89,15 @@ public:
 
 private:
 	std::string m_sscandir;
-	//�ļ�ϵͳ����xml�浵���·��
 	std::string m_sXmlFilePath;
-	//�ļ�ϵͳ�汾
 	unsigned int ClientVersion;
-	//�����ļ�
 	std::vector<FileInfo*> m_vFiles;
 
-	//����
 	void save(std::string path);
-	//��ȡ
 	void read(std::string path);
-	//ɨ���ļ���
 	void scandir(std::vector<FileInfo*>& vallfiles, std::string dirpath);
-	//ɨ���ļ�
 	void scanfile(std::vector<FileInfo*>& vallfiles, std::string filepath, bool bdir);
 public:
-	//��ʼɨ��
 	void startScanning(const char* scandir);
 	void scanfiles(std::string scandir, std::vector<FileInfo*>& vallfiles);
 

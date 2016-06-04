@@ -134,7 +134,6 @@ void FileManager::startScanning(const char* scandir)
 
 void FileManager::scanfiles(std::string sdir, std::vector<FileInfo*>& vallfiles)
 {
-	//�ȼ���֮ǰ�����ļ����Ǳ�ɾ��״̬������иı䣬��������ɨ�躯���������
 	std::vector<FileInfo*>::iterator it;
 	for (it = vallfiles.begin(); it != vallfiles.end(); ++it)
 	{
@@ -145,7 +144,6 @@ void FileManager::scanfiles(std::string sdir, std::vector<FileInfo*>& vallfiles)
 
 	scandir(vallfiles, sdir);
 
-	//���б仯�ļ�ʱ�ܰ汾��+1
 	for (it = vallfiles.begin(); it != vallfiles.end(); ++it)
 	{
 		FileInfo* obj = *it;
