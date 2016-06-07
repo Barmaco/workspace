@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "hello world!"
+
+srcdir="/home/barmaco/workspace/studyshell"
+echo "${srcdir}/*"
