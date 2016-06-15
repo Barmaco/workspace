@@ -3,6 +3,10 @@
 #CC=gcc
 CC=g++
 SRCS=test.cpp \
+			tinyxml/tinystr.cpp \
+			tinyxml/tinyxml.cpp \
+			tinyxml/tinyxmlerror.cpp \
+			tinyxml/tinyxmlparser.cpp \
 			utils/Buffer.cpp \
 			utils/XTimeUtil.cpp \
 			utils/ChineseData.cpp \
@@ -17,7 +21,7 @@ start: $(OBJS)
 	@echo "-------------ok-------------"
 	
 .cpp.o:
-	$(CC) -o $@ -c $<
+	$(CC) -g -o $@ -c $<
 	
 clean:
 	rm -f $(OBJS) $(EXEC)

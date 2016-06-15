@@ -6,13 +6,7 @@ Date:2016-03-21
 Description:
 **************************************************/
 #pragma once
-
-#define TARGET_PLATFORM_WIN 0
-#define TARGET_PLATFORM_LINUX 1
-
-#ifndef TARGET_PLATFORM
-#define TARGET_PLATFORM TARGET_PLATFORM_LINUX
-#endif
+#include "../extensionmacros.h"
 
 #if (TARGET_PLATFORM == TARGET_PLATFORM_WIN)
 #include <windows.h>

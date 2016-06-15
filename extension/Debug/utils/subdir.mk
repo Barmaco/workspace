@@ -3,22 +3,24 @@
 ################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
+O_SRCS += \
+../utils/Buffer.o \
+../utils/ChineseData.o \
+../utils/XTimeUtil.o 
+
 CPP_SRCS += \
 ../utils/Buffer.cpp \
 ../utils/ChineseData.cpp \
-../utils/FileManager.cpp \
 ../utils/XTimeUtil.cpp 
 
 OBJS += \
 ./utils/Buffer.o \
 ./utils/ChineseData.o \
-./utils/FileManager.o \
 ./utils/XTimeUtil.o 
 
 CPP_DEPS += \
 ./utils/Buffer.d \
 ./utils/ChineseData.d \
-./utils/FileManager.d \
 ./utils/XTimeUtil.d 
 
 

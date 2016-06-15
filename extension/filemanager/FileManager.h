@@ -10,23 +10,32 @@ Description:
 #include "../tinyxml/tinyxml.h"
 #include <string>
 #include <vector>
+#include "../extensionmacros.h"
 
 class FileInfo
 {
 public:
-	bool m_bdir = false;
-	std::string FileRelativePath = "";
-	long FileSize = 0;
-	std::string LastUpdateTime = "";
-	unsigned int Version = 0;
-	typedef enum CHANGE_TYPE
+	bool m_bdir;
+	std::string FileRelativePath;
+	long FileSize;
+	std::string LastUpdateTime;
+	unsigned int Version;
+	enum CHANGE_TYPE
 	{
 		CHANGE_TYPE_NONE = 0,
 		CHANGE_TYPE_CHANGE,
 		CHANGE_TYPE_ADD,
 		CHANGE_TYPE_DEL
 	};
-	CHANGE_TYPE m_echange = CHANGE_TYPE_NONE;
+	CHANGE_TYPE m_echange;
+
+	FileInfo()
+	{
+		m_bdir = false;
+		FileSize = 0;
+		Version = 0;
+		m_echange = CHANGE_TYPE_NONE;
+	}
 
 	virtual TiXmlElement* totixmlelement()
 	{

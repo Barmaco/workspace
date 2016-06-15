@@ -9,7 +9,7 @@ Description:
 #include "BaseNetDelegate.h"
 #include <vector>
 #include <list>
-#include "Buffer.h"
+#include "../utils/Buffer.h"
 
 namespace extension
 {

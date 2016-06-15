@@ -11,6 +11,7 @@ RM := rm -rf
 -include utils/subdir.mk
 -include tinyxml/subdir.mk
 -include net/subdir.mk
+-include filemanager/subdir.mk
 -include subdir.mk
 -include objects.mk
 

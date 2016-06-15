@@ -1,0 +1,19 @@
+1) 运行autoscan命令
+
+2) 将configure.scan 文件重命名为configure.in，并修改configure.in文件
+
+3) 在project目录下新建Makefile.am文件，并在core和shell目录下也新建makefile.am文件
+
+4) 在project目录下新建NEWS、 README、 ChangeLog 、AUTHORS文件
+
+5) 将/usr/share/automake-1.X/目录下的depcomp和complie文件拷贝到本目录下
+
+6) 运行aclocal命令
+
+7) 运行autoconf命令
+
+   autoheader
+
+8) 运行automake -a命令
+
+9) 运行./confiugre脚本

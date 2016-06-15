@@ -6,6 +6,7 @@ Date:2016-03-21
 Description:
 **************************************************/
 #include "BaseNetDelegate.h"
+#include <string.h>
 
 namespace extension
 {
@@ -29,21 +30,21 @@ BaseNetDelegate::~BaseNetDelegate()
 int BaseNetDelegate::initsocket()
 {
 #if (TARGET_PLATFORM == TARGET_PLATFORM_WIN)
-	// ¼ÓÔØsocket¶¯Ì¬Á´½Ó¿â(dll)
+	// ï¿½ï¿½ï¿½ï¿½socketï¿½ï¿½Ì¬ï¿½ï¿½ï¿½Ó¿ï¿½(dll)
 	WORD wVersionRequested;
-	WSADATA wsaData;	// Õâ½á¹¹ÊÇÓÃÓÚ½ÓÊÕWjndows SocketµÄ½á¹¹ÐÅÏ¢µÄ
+	WSADATA wsaData;	// ï¿½ï¿½á¹¹ï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½Wjndows Socketï¿½Ä½á¹¹ï¿½ï¿½Ï¢ï¿½ï¿½
 	int err;
 
-	wVersionRequested = MAKEWORD(1, 1);	// ÇëÇó1.1°æ±¾µÄWinSock¿â
+	wVersionRequested = MAKEWORD(1, 1);	// ï¿½ï¿½ï¿½ï¿½1.1ï¿½æ±¾ï¿½ï¿½WinSockï¿½ï¿½
 
 	err = WSAStartup(wVersionRequested, &wsaData);
 	if (err != 0) {
-		return -1;			// ·µ»ØÖµÎªÁãµÄÊ±ºòÊÇ±íÊ¾³É¹¦ÉêÇëWSAStartup
+		return -1;			// ï¿½ï¿½ï¿½ï¿½ÖµÎªï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ç±ï¿½Ê¾ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½WSAStartup
 	}
 
 	if (LOBYTE(wsaData.wVersion) != 1 || HIBYTE(wsaData.wVersion) != 1) {
-		// ¼ì²éÕâ¸öµÍ×Ö½ÚÊÇ²»ÊÇ1£¬¸ß×Ö½ÚÊÇ²»ÊÇ1ÒÔÈ·¶¨ÊÇ·ñÎÒÃÇËùÇëÇóµÄ1.1°æ±¾
-		// ·ñÔòµÄ»°£¬µ÷ÓÃWSACleanup()Çå³ýÐÅÏ¢£¬½áÊøº¯Êý
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½1ï¿½ï¿½È·ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1.1ï¿½æ±¾
+		// ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½WSACleanup()ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		WSACleanup();
 		return -1;
 	}
@@ -65,13 +66,13 @@ SOCKET BaseNetDelegate::socket_connect(const char* hostname, int port)
 		return 0;
 	}
 
-	struct sockaddr_in addr;					//¶¨ÒåÒ»¸öIPµØÖ·µÄ½á¹¹
+	struct sockaddr_in addr;					//ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½IPï¿½ï¿½Ö·ï¿½Ä½á¹¹
 	memset(&addr, 0, sizeof(addr));
-	addr.sin_family = AF_INET;					//ÉèÖÃ½á¹¹µØÖ·ÀàÐÍÎªTCP/IPµØÖ·
-	addr.sin_port = htons(port);				//Ö¸¶¨Ò»¸ö¶Ë¿ÚºÅ£º8080£¬htons:½«shortÀàÐÍ´Óhost×Ö½ÚÀàÐÍµ½net×Ö½ÚÀàÐÍ×ª»¯
-	addr.sin_addr.s_addr = inet_addr(hostname);	//½«×Ö·û´®ÀàÐÍµÄIPµØÖ·×ª»¯Îªint£¬¸³¸øaddr½á¹¹³ÉÔ±.
+	addr.sin_family = AF_INET;					//ï¿½ï¿½ï¿½Ã½á¹¹ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ÎªTCP/IPï¿½ï¿½Ö·
+	addr.sin_port = htons(port);				//Ö¸ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ë¿ÚºÅ£ï¿½8080ï¿½ï¿½htons:ï¿½ï¿½shortï¿½ï¿½ï¿½Í´ï¿½hostï¿½Ö½ï¿½ï¿½ï¿½ï¿½Íµï¿½netï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½
+	addr.sin_addr.s_addr = inet_addr(hostname);	//ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Íµï¿½IPï¿½ï¿½Ö·×ªï¿½ï¿½Îªintï¿½ï¿½ï¿½ï¿½ï¿½ï¿½addrï¿½á¹¹ï¿½ï¿½Ô±.
 
-	//µ÷ÓÃconnectÁ¬½Óµ½½á¹¹addrÖ¸¶¨µÄIPµØÖ·ºÍ¶Ë¿ÚºÅ
+	//ï¿½ï¿½ï¿½ï¿½connectï¿½ï¿½ï¿½Óµï¿½ï¿½á¹¹addrÖ¸ï¿½ï¿½ï¿½ï¿½IPï¿½ï¿½Ö·ï¿½Í¶Ë¿Úºï¿½
 	if (connect(st, (struct sockaddr *) &addr, sizeof(addr)) == -1)
 	{
 		printf("connect failed %s\n", strerror(errno));
@@ -107,20 +108,20 @@ SOCKET BaseNetDelegate::socket_create(int port)
 		return 0;
 	}
 
-	struct sockaddr_in addr;					//¶¨ÒåÒ»¸öIPµØÖ·½á¹¹
+	struct sockaddr_in addr;					//ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½IPï¿½ï¿½Ö·ï¿½á¹¹
 	memset(&addr, 0, sizeof(addr));
-	addr.sin_family = AF_INET;					//½«addr½á¹¹µÄÊôÐÔ¶¨Î»ÎªTCP/IPµØÖ·
-	addr.sin_port = htons(port);				//½«±¾µØ×Ö½ÚË³Ðò×ª»¯ÎªÍøÂç×Ö½ÚË³Ðò¡£
-	addr.sin_addr.s_addr = htonl(INADDR_ANY);	//INADDR_ANY´ú±íÕâ¸öserverÉÏËùÓÐµÄµØÖ·
+	addr.sin_family = AF_INET;					//ï¿½ï¿½addrï¿½á¹¹ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½Î»ÎªTCP/IPï¿½ï¿½Ö·
+	addr.sin_port = htons(port);				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½Ë³ï¿½ï¿½×ªï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½Ë³ï¿½ï¿½
+	addr.sin_addr.s_addr = htonl(INADDR_ANY);	//INADDR_ANYï¿½ï¿½ï¿½ï¿½ï¿½ï¿½serverï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄµï¿½Ö·
 
-	//½«IPÓëserver³ÌÐò°ó¶¨
+	//ï¿½ï¿½IPï¿½ï¿½serverï¿½ï¿½ï¿½ï¿½ï¿½
 	if (bind(st, (struct sockaddr *) &addr, sizeof(addr)) == -1)
 	{
 		printf("bind failed %s\n", strerror(errno));
 		return 0;
 	}
 
-	//server¶Ë¿ªÊ¼listen£¬
+	//serverï¿½Ë¿ï¿½Ê¼listenï¿½ï¿½
 	if (listen(st, 20) == -1)
 	{
 		printf("listen failed %s\n", strerror(errno));
@@ -134,8 +135,8 @@ SOCKET BaseNetDelegate::socket_create(int port)
 
 SOCKET BaseNetDelegate::socket_accept(SOCKET listen_st)
 {
-	SOCKET client_st = 0;					//client¶Ësocket
-	struct sockaddr_in client_addr;		//±íÊ¾client¶ËµÄIPµØÖ·
+	SOCKET client_st = 0;					//clientï¿½ï¿½socket
+	struct sockaddr_in client_addr;		//ï¿½ï¿½Ê¾clientï¿½Ëµï¿½IPï¿½ï¿½Ö·
 	memset(&client_addr, 0, sizeof(client_addr));
 
 #if (TARGET_PLATFORM == TARGET_PLATFORM_WIN)
@@ -145,7 +146,7 @@ SOCKET BaseNetDelegate::socket_accept(SOCKET listen_st)
 #endif
 	len = sizeof(client_addr);
 
-	//accept»á×èÈû£¬Ö±µ½ÓÐ¿Í»§¶ËÁ¬½Ó¹ýÀ´£¬accept·µ»ØclientµÄsocketÃèÊö·û
+	//acceptï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½Ð¿Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½ï¿½acceptï¿½ï¿½ï¿½ï¿½clientï¿½ï¿½socketï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	client_st = accept(listen_st, (struct sockaddr *)&client_addr, &len);
 	if (client_st == -1)
 	{
@@ -178,7 +179,7 @@ void BaseNetDelegate::sendm(SOCKET st, Buffer& pBuffer)
 	pBuffer.writeUInt(u_len);
 
 	pBuffer.moveReaderIndexToFront();
-	char* pData = pBuffer.readWholeData();	//ÐèÒªdelete
+	char* pData = pBuffer.readWholeData();	//ï¿½ï¿½Òªdelete
 	int nLength = (int)pBuffer.getContentSize();
 	pBuffer.moveReaderIndexToFront();
 
@@ -217,11 +218,11 @@ void BaseNetDelegate::sendthread()
 	{
 		pthread_mutex_lock(&m_lSendBuffersMutex);
 		/*
-		ÐèÒª×¢ÒâµÄÒ»µãÊÇÔÚthread4ÖÐÊ¹ÓÃµÄwhile (iCount < 100),
-		¶ø²»ÊÇif (iCount < 100)¡£
-		ÕâÊÇÒòÎªÔÚpthread_cond_singal()ºÍpthread_cond_wait()·µ»ØÖ®¼äÓÐÊ±¼ä²î£¬
-		¼ÙÈçÔÚÊ±¼ä²îÄÚ£¬thread3ÓÖ½«iCount¼õµ½ÁË100ÒÔÏÂÁË£¬
-		ÄÇÃ´thread4¾ÍÐèÒªÔÚµÈ´ýÌõ¼þÎªÕæÁË¡£
+		ï¿½ï¿½Òª×¢ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½thread4ï¿½ï¿½Ê¹ï¿½Ãµï¿½while (iCount < 100),
+		ï¿½ï¿½ï¿½ï¿½if (iCount < 100)ï¿½ï¿½
+		ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½pthread_cond_singal()ï¿½ï¿½pthread_cond_wait()ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½î£¬
+		ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ú£ï¿½thread3ï¿½Ö½ï¿½iCountï¿½ï¿½ï¿½ï¿½ï¿½ï¿½100ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½
+		ï¿½ï¿½Ã´thread4ï¿½ï¿½ï¿½ï¿½Òªï¿½ÚµÈ´ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Ë¡ï¿½
 		*/
 		while (m_lSendBuffers.empty())
 		{
@@ -267,12 +268,12 @@ void BaseNetDelegate::recvthread(SOCKET st)
 	{
 		memset(readbuf, 0, sizeof(readbuf));
 		int rc = recv(st, readbuf, sizeof(readbuf), 0);
-		if (rc <= 0)				//Èç¹ûrecv·µ»ØÐ¡ÓÚµÈÓÚ0£¬´ú±ísocketÒÑ¾­¹Ø±Õ»òÕß³ö´íÁË
+		if (rc <= 0)
 			break;
 
 		databuf.writeData(readbuf, (unsigned int)rc);
 
-		//¼ì²éÊý¾Ý°ü
+		//ï¿½ï¿½ï¿½ï¿½ï¿½Ý°ï¿½
 		while (databuf.isReadable(HEAD_SIZE))
 		{
 			int n_head_len = databuf.readInt();

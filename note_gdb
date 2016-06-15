@@ -1,0 +1,13 @@
+c		Continue的简写，继续执行被调试程序，直至下一个断点或程序结束
+s		执行一行源程序代码，如果此行代码中有函数调用，则进入该函数
+n		执行一行源程序代码，此行代码中的函数调用也一并执行
+p <变量名称>	Print的简写，显示指定变量（临时变量或全局变量）的值
+l		l命令相当于list，从第一行开始例出原码。
+info break [n] 	查看断点
+until 		运行到某一行
+print num	显示数据
+
+
+
+barmaco@barmaco-virtual-machine:~/workspace/extension$ gdb
+(gdb) file hello

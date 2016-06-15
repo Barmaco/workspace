@@ -7,7 +7,7 @@ Description:
 **************************************************/
 #pragma once
 #include "BaseNetDelegate.h"
-#include "Buffer.h"
+#include "../utils/Buffer.h"
 
 namespace extension
 {

@@ -1,2 +1,27 @@
+eclipse添加动态库：在Debug下的objects.mk，中添加：LIBS :=-lpthread
+libdvbpsi环境：examples/.libs/decode_pmt	并在Environment中添加
+		LD_LIBRARY_PATH - /home/barmaco/libdvbpsi-1.2.0/src/.libs
+
 复制文件夹：	cp -r vlc-2.2.1 vlc-2.2.1_bak
 只显示文件夹：	ls -l|grep ^d
+重命名文件：	mv test.log test1.txt
+查看当前系统：	cat /etc/issue
+		Ubuntu 14.04.3 LTS \n \l
+加权限：	chmod +x ./test.sh 
+
+htop:	
+	apt-get install htop
+	
+	PID：进行的标识号
+	USER：运行此进程的用户
+	PRI：进程的优先级
+	NI：进程的优先级别值，默认的为0，可以进行调整
+	VIRT：进程占用的虚拟内存值
+	RES：进程占用的物理内存值
+	SHR：进程占用的共享内存值
+	S：进程的运行状况，R表示正在运行、S表示休眠，等待唤醒、Z表示僵死状态
+	%CPU：该进程占用的CPU使用率
+	%MEM：该进程占用的物理内存和总内存的百分比
+	TIME+：该进程启动后占用的总的CPU时间
+	COMMAND：进程启动的启动命令名称
+

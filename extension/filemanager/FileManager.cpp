@@ -9,9 +9,15 @@ Description:
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include  <direct.h>
 #include  <stdio.h>
+#if (TARGET_PLATFORM == TARGET_PLATFORM_WIN)
 #include <io.h>
+#include  <direct.h>
+#elif (TARGET_PLATFORM == TARGET_PLATFORM_LINUX)
+#include <unistd.h>
+#include <dirent.h>
+#define _MAX_PATH (128)
+#endif
 
 FileManager* FileManager::m_pInstance = NULL;
 
@@ -19,14 +25,24 @@ FileManager::FileManager() :
 ClientVersion(0)
 {
 	char curpath[_MAX_PATH];
+#if (TARGET_PLATFORM == TARGET_PLATFORM_WIN)
 	_getcwd(curpath, _MAX_PATH);
+#elif (TARGET_PLATFORM == TARGET_PLATFORM_LINUX)
+	getcwd(curpath,  _MAX_PATH);
+#endif
+
 	printf("%s\n", curpath);
 
 	m_sXmlFilePath.clear();
 	m_sXmlFilePath.assign(curpath);
 	m_sXmlFilePath.append("/UpdateConfiguration.xml");
 
+
+#if (TARGET_PLATFORM == TARGET_PLATFORM_WIN)
 	if ( (_access(m_sXmlFilePath.c_str(), 0)) != -1 )
+#elif (TARGET_PLATFORM == TARGET_PLATFORM_LINUX)
+		if ( (access(m_sXmlFilePath.c_str(), F_OK)) == 0 )
+#endif
 	{
 		read(m_sXmlFilePath);
 	} else
@@ -159,13 +175,22 @@ void FileManager::scanfiles(std::string sdir, std::vector<FileInfo*>& vallfiles)
 void FileManager::scandir(std::vector<FileInfo*>& vallfiles, std::string dirpath)
 {
 	char curpath[_MAX_PATH];
+	memset(curpath, 0, sizeof(curpath));
+#if (TARGET_PLATFORM == TARGET_PLATFORM_WIN)
 	_getcwd(curpath, _MAX_PATH);
+#elif (TARGET_PLATFORM == TARGET_PLATFORM_LINUX)
+	getcwd(curpath,  _MAX_PATH);
+#endif
 	std::string filespath;
 	filespath.assign(curpath);
 	filespath.append("/");
 	filespath.append(dirpath.c_str());
-	filespath.append("/*.*");
 
+#if (TARGET_PLATFORM == TARGET_PLATFORM_WIN)
+	filespath.append("/*.*");
+#endif
+
+#if(TARGET_PLATFORM == TARGET_PLATFORM_WIN)
 	_finddata_t fileinfo;
 	long handle;
 	if ((handle = _findfirst(filespath.c_str(), &fileinfo)) == -1)
@@ -202,7 +227,53 @@ void FileManager::scandir(std::vector<FileInfo*>& vallfiles, std::string dirpath
 		} while (_findnext(handle, &fileinfo) == 0);
 	}
 	_findclose(handle);
+#elif(TARGET_PLATFORM == TARGET_PLATFORM_LINUX)
+	DIR* dp;
+	struct dirent* dirp;
+	struct stat st;
 
+	/* open dirent directory */
+	if((dp = opendir(filespath.c_str())) == NULL)
+	{
+		perror("opendir");
+		return;
+	}
+
+	/**
+	* read all files in this dir
+	**/
+	while((dirp = readdir(dp)) != NULL)
+	{
+
+		if(dirp->d_type & DT_DIR)
+		{
+
+			if(strcmp(dirp->d_name,".")==0 || strcmp(dirp->d_name,"..")==0)
+				continue;
+
+			std::string subdir;
+			subdir.clear();
+			subdir.assign(dirpath.c_str());
+			subdir.append("/");
+			subdir.append(dirp->d_name);
+
+			scandir(vallfiles, subdir);
+			scanfile(vallfiles, subdir, true);
+
+		}
+		else
+		{
+			std::string filepath;
+			filepath.clear();
+			filepath.assign(dirpath);
+			filepath.append("/");
+			filepath.append(dirp->d_name);
+
+			scanfile(vallfiles, filepath, false);
+		}
+
+	}
+#endif
 	/*int i = 0;
 	do{
 		QFileInfo fileInfo = list.at(i);
@@ -232,7 +303,11 @@ void FileManager::scandir(std::vector<FileInfo*>& vallfiles, std::string dirpath
 void FileManager::scanfile(std::vector<FileInfo*>& vallfiles, std::string filep, bool bdir)
 {
 	char curpath[_MAX_PATH];
+#if (TARGET_PLATFORM == TARGET_PLATFORM_WIN)
 	_getcwd(curpath, _MAX_PATH);
+#elif (TARGET_PLATFORM == TARGET_PLATFORM_LINUX)
+	getcwd(curpath,  _MAX_PATH);
+#endif
 
 	std::string filepathstr;
 	filepathstr.clear();

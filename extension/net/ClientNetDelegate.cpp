@@ -6,7 +6,8 @@ Date:2016-03-21
 Description:
 **************************************************/
 #include "ClientNetDelegate.h"
-#include "Buffer.h"
+#include "../utils/Buffer.h"
+ #include <string.h>
 
 namespace extension
 {

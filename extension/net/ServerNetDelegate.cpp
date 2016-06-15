@@ -63,7 +63,7 @@ void ServerNetDelegate::mainthread()
 
 		pthread_t receivethread;
 		pthread_create(&receivethread, NULL, &ServerNetDelegate::runrecvthread, &psobj);
-		pthread_detach(receivethread);				//设置线程为可分离
+		pthread_detach(receivethread);
 
 		/*
 		#if (TARGET_PLATFORM == TARGET_PLATFORM_WIN)

@@ -5,17 +5,14 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../net/BaseNetDelegate.cpp \
-../net/ClientNetDelegate.cpp \
 ../net/ServerNetDelegate.cpp 
 
 OBJS += \
 ./net/BaseNetDelegate.o \
-./net/ClientNetDelegate.o \
 ./net/ServerNetDelegate.o 
 
 CPP_DEPS += \
 ./net/BaseNetDelegate.d \
-./net/ClientNetDelegate.d \
 ./net/ServerNetDelegate.d 
 
 

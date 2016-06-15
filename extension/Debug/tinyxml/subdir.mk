@@ -3,6 +3,12 @@
 ################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
+O_SRCS += \
+../tinyxml/tinystr.o \
+../tinyxml/tinyxml.o \
+../tinyxml/tinyxmlerror.o \
+../tinyxml/tinyxmlparser.o 
+
 CPP_SRCS += \
 ../tinyxml/tinystr.cpp \
 ../tinyxml/tinyxml.cpp \
