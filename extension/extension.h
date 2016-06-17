@@ -7,10 +7,10 @@ Description:
 **************************************************/
 #pragma once
 
-//#include "netmacros.h"
+#include "net/netmacros.h"
 
-//#include "BaseNetDelegate.h"
-//#include "ServerNetDelegate.h"
+#include "net/BaseNetDelegate.h"
+//#include "net/ServerNetDelegate.h"
 //#include "ClientNetDelegate.h"
 
 #include "filemanager/FileManager.h"
