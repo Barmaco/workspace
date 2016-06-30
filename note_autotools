@@ -17,3 +17,22 @@
 8) 运行automake -a命令
 
 9) 运行./confiugre脚本
+
+-----------------------------------------------------------------------------------
+
+cmake:
+
+-----------------------------------------------------------------------------------
+
+eclipse:
+eclipse添加动态库：
+		//在Debug下的objects.mk，中添加：LIBS :=-lpthread
+		http://blog.csdn.net/xidianliusoftware/article/details/6915831
+		Properties->C/C++ Build->Settings->Tool Settings->Cross G++ Linker->
+		Libraries->Libraries(-l)->添加pthread
+libdvbpsi环境：
+		examples/.libs/decode_pmt	并在Environment中添加
+		LD_LIBRARY_PATH - /home/barmaco/libdvbpsi-1.2.0/src/.libs
+
+
+

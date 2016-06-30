@@ -1,6 +1,3 @@
-eclipse添加动态库：在Debug下的objects.mk，中添加：LIBS :=-lpthread
-libdvbpsi环境：examples/.libs/decode_pmt	并在Environment中添加
-		LD_LIBRARY_PATH - /home/barmaco/libdvbpsi-1.2.0/src/.libs
 
 复制文件夹：	cp -r vlc-2.2.1 vlc-2.2.1_bak
 只显示文件夹：	ls -l|grep ^d

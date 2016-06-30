@@ -1,0 +1,76 @@
+ $ mkdir -p contrib/win32
+ $ cd contrib/win32
+
+//将包放在此文件夹下
+
+ $ ../bootstrap --host=i686-w64-mingw32
+ $ make prebuilt
+
+vlc的编译：
+*.tar 用 tar –xvf 解压
+根据网站步骤编译vlc
+https://wiki.videolan.org/Win32Compile/
+
+先删除win32文件夹
+rm -r win32/
+
+./bootstrap
+设置环境变量
+export PKG_CONFIG_LIBDIR=$HOME/vlc-2.2.1/contrib/i686-w64-mingw32/lib/pkgconfig 
+
+设置编译配置文件
+../extras/package/win32/configure.sh  --host=i686-w64-mingw32 --disable-dvdread --disable-goom --disable-taglib --disable-x265 --disable-gnutls
+
+make
+
+make package-win-common //打包
+
+将vlc文件夹中下打 win32/vlc-2.2.1 拷出来即可
+
+///编译中linux下的 vlc 
+http://blog.csdn.net/a568953256/article/details/17529395 
+
+./configure --disable-lua --disable-avcodec --disable-swscale --disable-xcb --disable-alsa
+
+cp /home/barmaco/ffmpeg/lib/libavcodec.a /usr/local/lib
+cp /home/barmaco/ffmpeg/lib/libavdevice.a /usr/local/lib
+cp /home/barmaco/ffmpeg/lib/libavfilter.a /usr/local/lib
+cp /home/barmaco/ffmpeg/lib/libavformat.a /usr/local/lib
+cp /home/barmaco/ffmpeg/lib/libavutil.a /usr/local/lib
+cp /home/barmaco/ffmpeg/lib/libswresample.a /usr/local/lib
+cp /home/barmaco/ffmpeg/lib/libswscale.a /usr/local/lib
+cp -R /home/barmaco/ffmpeg/include/libavcodec /usr/local/include
+cp -R /home/barmaco/ffmpeg/include/libavdevice /usr/local/include
+cp -R /home/barmaco/ffmpeg/include/libavfilter /usr/local/include
+cp -R /home/barmaco/ffmpeg/include/libavformat /usr/local/include
+cp -R /home/barmaco/ffmpeg/include/libavutil /usr/local/include
+cp -R /home/barmaco/ffmpeg/include/libswresample /usr/local/include
+cp -R /home/barmaco/ffmpeg/include/libswscale /usr/local/include
+
+/***ffmpeg的编译*******************/
+make distclean  //清空.o 等文件
+
+bash ./configure --enable-static  --disable-shared --enable-memalign-hack  --enable-cross-compile --target-os=mingw32 --arch=x86 --cross-prefix=i686-w64-mingw32-   //配置cofig文件 
+
+sudo make install-libs   //生成lib
+
+sudo make install-headers   //生成.h
+
+将 /usr/local/lib 下的libavcodec.a 放入/home/wangbo/vlc-2.2.1/contrib/i686-w64-mingw32/lib 中替换之前打文件
+
+将 上面生成的.h文件也替换掉，如果有修改.h文件的话
+
+将/usr/local/lib/pkgconfig下打libavcodec.pc 放入/home/wangbo/vlc-2.2.1/contrib/i686-w64-mingw32/lib/pkgconfig中替换之前打文件
+
+
+//barmaco
+eclipse安装
+http://www.cppblog.com/kangnixi/archive/2010/02/10/107636.html
+sudo apt-get install eclipse
+sudo apt-get install eclipse-pde
+sudo apt-get install eclipse-jdt
+sudo apt-get install eclipse-cdt
+调试vlc：直接配置一个c/c++ application debug configurations, 在main里配置vlc
+
+
+

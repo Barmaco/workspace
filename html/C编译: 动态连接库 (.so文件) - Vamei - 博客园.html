@@ -1,0 +1,538 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>C编译: 动态连接库 (.so文件) - Vamei - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=fgzxo2_Ho7mioboYbShX1791ipTrBogX0dCgJ2satJ41"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/LessIsMore/bundle-LessIsMore.css?v=0F7NKnmmVYJDCp-KQ2sA7Dn1GREfDmWWyNjiJP9YrzE1"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/vamei/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/vamei/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/vamei/wlwmanifest.xml"/>
+<script src="http://common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'vamei', cb_enable_mathjax=true;</script>
+<script src="/bundles/blog-common.js?v=k_VLiLuTR5TaODrvTJO53Mpqwpelr4otNvDzBEpx_m81" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+<!--PageBeginHtml Block Begin-->
+<link rel="stylesheet" type="text/css" href="http://files.cnblogs.com/vamei/custom.css">
+
+<a href="https://github.com/Vamei"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://github-camo.global.ssl.fastly.net/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+
+<!-- Math Equation Display -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+    inlineMath: [ ["\[$","$\]"], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: true
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- responsive -->
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+        var meta = document.createElement("meta");
+        meta.name = "viewport";
+        meta.content = "width=device-width, initial-scale=1.0";
+        $('head').prepend(meta);
+    });
+</script>
+<!--PageBeginHtml Block End-->
+
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+		
+<!--done-->
+<div class="title"><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/vamei/">Vamei</a></div>
+<div class="subtitle">编程，数学，设计</div>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li id="nav_sitehome"><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li id="nav_myhome"><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/vamei/">首页</a></li>
+<li id="nav_newpost"></li>
+<li id="nav_contact"></li>
+<li id="nav_rss"><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/vamei/rss">订阅</a>
+<!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/vamei/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li id="nav_admin"><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+</ul>
+
+		<div class="blogStats">
+			
+			
+<!--done-->
+随笔-209&nbsp;
+文章-1&nbsp;
+评论-3769&nbsp;
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class = "post">
+		<h1 class = "postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/vamei/archive/2013/04/04/2998850.html">C编译: 动态连接库 (.so文件)</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p><span style="font-family: courier new,courier;">作者：Vamei 出处：http://www.cnblogs.com/vamei 欢迎转载，也请保留这段声明。谢谢！</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<p><span style="font-family: courier new,courier;">在&ldquo;<a href="http://www.cnblogs.com/vamei/archive/2013/03/22/2974052.html">纸上谈兵: 算法与数据结构</a>&rdquo;中，我在每一篇都会有一个C程序，用于实现算法和数据结构 (比如栈和相关的操作)。在同一个程序中，还有用于测试的main()函数，结构体定义，函数原型，typedef等等。</span></p>
+<p><span style="font-family: courier new,courier;">这样的做法非常不&ldquo;环保&rdquo;。算法的实际运用和算法的实现混在一起。如果我想要重复使用之前的源程序，必须进行许多改动，并且重新编译。最好的解决方案是实现模块化: 只保留纯粹的算法实现，分离头文件，并编译一个<span style="color: #ff0000;">库(library)</span>。每次需要使用库的时候(比如使用栈数据结构)，就在程序中include头文件，连接库。这样，不需要每次都改动源程序。</span></p>
+<p><span style="font-family: courier new,courier;">我在这里介绍如何在UNIX环境中创建<span style="color: #ff0000;">共享库</span> (shared library)。UNIX下，共享库以so为后缀(shared object)。共享库与Windows下的DLL类似，是在程序运行时动态连接。多个进程可以连接同一个共享库。</span></p>
+<p><span style="font-family: courier new,courier;"><img style="display: block; margin-left: auto; margin-right: auto;" src="http://images.cnitblog.com/blog/413416/201304/04185356-83460a8e015846f48687f0093c50b101.jpg" alt="" width="387" height="351" /></span></p>
+<p>&nbsp;</p>
+<p style="text-align: center;">共享库</p>
+<p><span style="font-family: courier new,courier;">本文使用Ubuntu测试，使用gcc作为编译器。</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<h3><span style="font-family: courier new,courier;">程序清理</span></h3>
+<p><span style="font-family: courier new,courier;">下面程序来自<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/vamei/archive/2013/03/14/2960201.html">纸上谈兵: 栈 (stack)</a>，是栈数据结构的C实现:</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: courier new,courier;"><span style="color: #008000;">/*</span><span style="color: #008000;"> By Vamei </span><span style="color: #008000;">*/</span>
+<span style="color: #008000;">/*</span><span style="color: #008000;"> use single-linked list to implement stack </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+#include </span>&lt;stdio.h&gt;<span style="color: #000000;">
+#include </span>&lt;stdlib.h&gt;<span style="color: #000000;">
+
+typedef </span><span style="color: #0000ff;">struct</span> node *<span style="color: #000000;">position;
+typedef </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> ElementTP;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> point to the  head node of the list</span>
+typedef <span style="color: #0000ff;">struct</span> node *<span style="color: #000000;">STACK;
+ 
+</span><span style="color: #0000ff;">struct</span><span style="color: #000000;"> node {
+    ElementTP element;
+    position next;
+};
+
+STACK init_stack(</span><span style="color: #0000ff;">void</span><span style="color: #000000;">);
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> delete_stack(STACK);
+ElementTP top(STACK);
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> push(STACK, ElementTP);
+ElementTP pop(STACK);
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> is_null(STACK);
+
+</span><span style="color: #0000ff;">void</span> main(<span style="color: #0000ff;">void</span><span style="color: #000000;">)
+{
+    ElementTP a;
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> i;
+    STACK sk;
+    sk </span>=<span style="color: #000000;"> init_stack();
+    push(sk, </span><span style="color: #800080;">1</span><span style="color: #000000;">);
+    push(sk, </span><span style="color: #800080;">2</span><span style="color: #000000;">);
+    push(sk, </span><span style="color: #800080;">8</span><span style="color: #000000;">);
+    printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">Stack is null? %d\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, is_null(sk));
+    </span><span style="color: #0000ff;">for</span> (i=<span style="color: #800080;">0</span>; i&lt;<span style="color: #800080;">3</span>; i++<span style="color: #000000;">) {
+        a </span>=<span style="color: #000000;"> pop(sk);
+        printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">pop: %d\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, a);
+    }
+
+    printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">Stack is null? %d\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, is_null(sk));    
+    delete_stack(sk);
+}
+
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">
+ * initiate the stack
+ * malloc the head node.
+ * Head node doesn't store valid data
+ * head-&gt;next is the top node
+ </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+STACK init_stack(</span><span style="color: #0000ff;">void</span><span style="color: #000000;">)
+{
+    position np;
+    STACK    sk;
+    np </span>= (position) malloc(<span style="color: #0000ff;">sizeof</span>(<span style="color: #0000ff;">struct</span><span style="color: #000000;"> node));
+    np</span>-&gt;next     = NULL;  <span style="color: #008000;">//</span><span style="color: #008000;"> sk-&gt;next is the top node</span>
+    sk =<span style="color: #000000;"> np; 
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> sk;
+}
+
+</span><span style="color: #008000;">/*</span><span style="color: #008000;"> pop out all elements 
+ * and then delete head node
+ </span><span style="color: #008000;">*/</span>
+<span style="color: #0000ff;">void</span><span style="color: #000000;"> delete_stack(STACK sk)
+{
+    </span><span style="color: #0000ff;">while</span>(!<span style="color: #000000;">is_null(sk)) {
+        pop(sk);
+    }
+    free(sk);
+}
+</span><span style="color: #008000;">/*</span><span style="color: #008000;"> 
+ * View the top frame
+ </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+ElementTP top(STACK sk)
+{
+    </span><span style="color: #0000ff;">return</span> (sk-&gt;next-&gt;<span style="color: #000000;">element);
+}
+
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">
+ * push a value into the stack
+ </span><span style="color: #008000;">*/</span>
+<span style="color: #0000ff;">void</span><span style="color: #000000;"> push(STACK sk, ElementTP value) 
+{
+    position np, oldTop;
+    oldTop </span>= sk-&gt;<span style="color: #000000;">next;    
+
+    np </span>= (position) malloc(<span style="color: #0000ff;">sizeof</span>(<span style="color: #0000ff;">struct</span><span style="color: #000000;"> node));
+    np</span>-&gt;element  =<span style="color: #000000;"> value;
+    np</span>-&gt;next     = sk-&gt;<span style="color: #000000;">next;
+
+    sk</span>-&gt;next     =<span style="color: #000000;"> np; 
+}
+
+</span><span style="color: #008000;">/*</span><span style="color: #008000;"> 
+ * pop out the top value
+ </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+ElementTP pop(STACK sk)
+{
+    ElementTP element;
+    position top, newTop;
+    </span><span style="color: #0000ff;">if</span><span style="color: #000000;"> (is_null(sk)) {
+        printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">pop() on an empty stack</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        exit(</span><span style="color: #800080;">1</span><span style="color: #000000;">);
+    } 
+    </span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {
+        top      </span>= sk-&gt;<span style="color: #000000;">next;
+        element  </span>= top-&gt;<span style="color: #000000;">element;     
+        newTop   </span>= top-&gt;<span style="color: #000000;">next;
+        sk</span>-&gt;next     =<span style="color: #000000;"> newTop;
+        free(top);
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> element;
+    } 
+}
+
+</span><span style="color: #008000;">/*</span><span style="color: #008000;"> check whether a stack is empty</span><span style="color: #008000;">*/</span>
+<span style="color: #0000ff;">int</span><span style="color: #000000;"> is_null(STACK sk)
+{
+    </span><span style="color: #0000ff;">return</span> (sk-&gt;next ==<span style="color: #000000;"> NULL);
+}</span></span></pre>
+</div>
+<p><span style="font-family: courier new,courier;">上面的main()部分是用于测试，不属于功能模块，在创建库的时候应该去掉。</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<p><span style="font-family: courier new,courier;">程序中的一些声明，会被重复利用。比如:</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: courier new,courier;">typedef <span style="color: #0000ff;">struct</span> node *<span style="color: #000000;">position;
+typedef </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> ElementTP;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> point to the  head node of the list</span>
+typedef <span style="color: #0000ff;">struct</span> node *<span style="color: #000000;">STACK;
+ 
+</span><span style="color: #0000ff;">struct</span><span style="color: #000000;"> node {
+    ElementTP element;
+    position next;
+};
+
+STACK init_stack(</span><span style="color: #0000ff;">void</span><span style="color: #000000;">);
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> delete_stack(STACK);
+ElementTP top(STACK);
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> push(STACK, ElementTP);
+ElementTP pop(STACK);
+</span><span style="color: #0000ff;">int</span> is_null(STACK);</span></pre>
+</div>
+<p><span style="font-family: courier new,courier;">这一段程序声明了一些结构体和指针，以及栈操作的函数原型。当我们其他程序中调用库时 (比如创建一个栈，或者执行pop操作)，同样需要写这些声明。我们把这些在实际调用中需要的声明保存到一个头文件mystack.h。在实际调用的程序中，可以简单的<span style="color: #800000;">include</span>该头文件，避免了每次都写这些声明语句的麻烦。</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<p><span style="font-family: courier new,courier;">经过清理后的C程序为<span style="color: #800000;">my</span><span style="color: #800000;">stack.c</span>:</span></p>
+<div class="cnblogs_code">
+<pre></pre>
+<pre><span style="font-family: courier new,courier;"><span style="color: #008000;">/*</span><span style="color: #008000;"> By Vamei </span><span style="color: #008000;">*/</span>
+<span style="color: #008000;">/*</span><span style="color: #008000;"> use single-linked list to implement stack </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+#include </span>&lt;stdio.h&gt;<span style="color: #000000;">
+#include </span>&lt;stdlib.h&gt;<span style="color: #008000;"><br /><span style="color: #000000;">#include "mystack.h"</span><br /><br /><br />/*</span><span style="color: #008000;">
+ * initiate the stack
+ * malloc the head node.
+ * Head node doesn't store valid data
+ * head-&gt;next is the top node
+ </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+STACK init_stack(</span><span style="color: #0000ff;">void</span><span style="color: #000000;">)
+{
+    position np;
+    STACK    sk;
+    np </span>= (position) malloc(<span style="color: #0000ff;">sizeof</span>(<span style="color: #0000ff;">struct</span><span style="color: #000000;"> node));
+    np</span>-&gt;next     = NULL;  <span style="color: #008000;">//</span><span style="color: #008000;"> sk-&gt;next is the top node</span>
+    sk =<span style="color: #000000;"> np; 
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> sk;
+}
+
+</span><span style="color: #008000;">/*</span><span style="color: #008000;"> pop out all elements 
+ * and then delete head node
+ </span><span style="color: #008000;">*/</span>
+<span style="color: #0000ff;">void</span><span style="color: #000000;"> delete_stack(STACK sk)
+{
+    </span><span style="color: #0000ff;">while</span>(!<span style="color: #000000;">is_null(sk)) {
+        pop(sk);
+    }
+    free(sk);
+}
+</span><span style="color: #008000;">/*</span><span style="color: #008000;"> 
+ * View the top frame
+ </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+ElementTP top(STACK sk)
+{
+    </span><span style="color: #0000ff;">return</span> (sk-&gt;next-&gt;<span style="color: #000000;">element);
+}
+
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">
+ * push a value into the stack
+ </span><span style="color: #008000;">*/</span>
+<span style="color: #0000ff;">void</span><span style="color: #000000;"> push(STACK sk, ElementTP value) 
+{
+    position np, oldTop;
+    oldTop </span>= sk-&gt;<span style="color: #000000;">next;    
+
+    np </span>= (position) malloc(<span style="color: #0000ff;">sizeof</span>(<span style="color: #0000ff;">struct</span><span style="color: #000000;"> node));
+    np</span>-&gt;element  =<span style="color: #000000;"> value;
+    np</span>-&gt;next     = sk-&gt;<span style="color: #000000;">next;
+
+    sk</span>-&gt;next     =<span style="color: #000000;"> np; 
+}
+
+</span><span style="color: #008000;">/*</span><span style="color: #008000;"> 
+ * pop out the top value
+ </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+ElementTP pop(STACK sk)
+{
+    ElementTP element;
+    position top, newTop;
+    </span><span style="color: #0000ff;">if</span><span style="color: #000000;"> (is_null(sk)) {
+        printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">pop() on an empty stack</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        exit(</span><span style="color: #800080;">1</span><span style="color: #000000;">);
+    } 
+    </span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {
+        top      </span>= sk-&gt;<span style="color: #000000;">next;
+        element  </span>= top-&gt;<span style="color: #000000;">element;     
+        newTop   </span>= top-&gt;<span style="color: #000000;">next;
+        sk</span>-&gt;next     =<span style="color: #000000;"> newTop;
+        free(top);
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> element;
+    } 
+}
+
+</span><span style="color: #008000;">/*</span><span style="color: #008000;"> check whether a stack is empty</span><span style="color: #008000;">*/</span>
+<span style="color: #0000ff;">int</span><span style="color: #000000;"> is_null(STACK sk)
+{
+    </span><span style="color: #0000ff;">return</span> (sk-&gt;next ==<span style="color: #000000;"> NULL);
+}</span></span></pre>
+</div>
+<p><span style="font-family: courier new,courier;"><span style="color: #800000;">#include "...";</span> 语句将首先在工作目录寻找相应文件。如果使用gcc时，增加<span style="color: #800000;">-I</span>选项，将在-I提供的路径中寻找。</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<h3><span style="font-family: courier new,courier;">制作.so文件</span></h3>
+<p><span style="font-family: courier new,courier;">我们的目标是制作共享库，即.so文件。</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<p><span style="font-family: courier new,courier;">首先，编译stack.c:</span></p>
+<p><span style="color: #800000; font-family: courier new,courier;">$gcc -c -fPIC -o mystack.o mystack.c</span></p>
+<p><span style="font-family: courier new,courier;"><span style="color: #800000;">-c</span>表示<span style="color: #ff0000;">只编译</span>(compile)，而不连接。<span style="color: #800000;">-o</span>选项用于说明<span style="color: #ff0000;">输出</span>(output)文件名。gcc将生成一个目标(object)文件<span style="color: #800000;">my</span><span style="color: #800000;">stack.o</span>。</span></p>
+<p><span style="font-family: courier new,courier;">注意-fPIC选项。PIC指<span style="color: #ff0000;">Position Independent Code</span>。共享库要求有此选项，以便实现动态连接(dynamic linking)。</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<p><span style="font-family: courier new,courier;">生成共享库:</span></p>
+<p><span style="color: #800000; font-family: courier new,courier;">$gcc -shared -o libmystack.so mystack.o</span></p>
+<p><span style="font-family: courier new,courier;">库文件以lib开始。共享库文件以<span style="color: #800000;">.so</span>为后缀。-shared表示生成一个共享库。</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<p><span style="font-family: courier new,courier;">这样，共享库就完成了。.so文件和.h文件都位于当前工作路径(.)。</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<h3><span style="font-family: courier new,courier;">使用共享库</span></h3>
+<p><span style="font-family: courier new,courier;">我们编写一个test.c，来实际调用共享库:</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: courier new,courier;">#include &lt;stdio.h&gt;<span style="color: #000000;">
+#include </span><span style="color: #800000;">"</span><span style="color: #800000;">mystack.h</span><span style="color: #800000;">"</span>
+</span><br /><span style="color: #008000; font-family: courier new,courier;">/*</span><br /><span style="color: #008000; font-family: courier new,courier;"> * call functions in mystack library</span><br /><span style="font-family: courier new,courier;"><span style="color: #008000;"> */</span>
+<span style="color: #0000ff;">void</span> main(<span style="color: #0000ff;">void</span><span style="color: #000000;">)
+{
+    ElementTP a;
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> i;
+    STACK sk;
+    sk </span>=<span style="color: #000000;"> init_stack();
+    push(sk, </span><span style="color: #800080;">1</span><span style="color: #000000;">);
+    push(sk, </span><span style="color: #800080;">2</span><span style="color: #000000;">);
+    push(sk, </span><span style="color: #800080;">8</span><span style="color: #000000;">);
+    printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">Stack is null? %d\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, is_null(sk));
+    </span><span style="color: #0000ff;">for</span> (i=<span style="color: #800080;">0</span>; i&lt;<span style="color: #800080;">3</span>; i++<span style="color: #000000;">) {
+        a </span>=<span style="color: #000000;"> pop(sk);
+        printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">pop: %d\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, a);
+    }
+
+    printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">Stack is null? %d\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, is_null(sk));    
+    delete_stack(sk);
+}</span></span></pre>
+</div>
+<p><span style="font-family: courier new,courier;">注意，我们在程序的一开始include了mystack.h。</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<p><span style="font-family: courier new,courier;">编译上述程序。编译器需要知道<span style="color: #ff0000;">.h文件</span>位置。</span></p>
+<ul>
+<li><span style="font-family: courier new,courier;">对于#include "..."，编译器会在当前路径搜索.h文件。你也可以使用<span style="color: #800000;">-I</span>选项提供额外的搜索路径，比如-I/home/vamei/test。</span></li>
+<li><span style="font-family: courier new,courier;">对于#include &lt;...&gt;，编译器会在默认include搜索路径中寻找。</span></li>
+</ul>
+<p><span style="font-family: courier new,courier;">编译器还需要知道我们用了<span style="color: #ff0000;">哪个库文件</span>，在gcc中:</span></p>
+<ul>
+<li><span style="font-family: courier new,courier;">使用<span style="color: #800000;">-l</span>选项说明库文件的名字。这里，我们将使用-lmystack (即libmystack库文件)。</span></li>
+<li><span style="font-family: courier new,courier;">使用<span style="color: #800000;">-L</span>选项说明库文件所在的路径。这里，我们使用-L. (即.路径)。</span></li>
+</ul>
+<p><span style="font-family: courier new,courier;">如果没有提供-L选项，gcc将在默认库文件搜索路径中寻找。</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<p><span style="font-family: courier new,courier;">你可以使用下面的命令，来获知自己电脑上的include默认搜索路径:</span></p>
+<p><span style="color: #800000; font-family: courier new,courier;">$`gcc -print-prog-name=cc1` -v&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-family: courier new,courier;">获知库默认搜索路径:</span></p>
+<p><span style="color: #800000; font-family: courier new,courier;">$gcc -print-search-dirs</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<p><span style="font-family: courier new,courier;">我们所需的.h和.so文件都在当前路径，因此，使用如下命令编译:</span></p>
+<p><span style="color: #800000; font-family: courier new,courier;">$gcc -o test test.c -lmystack -L.<br /></span></p>
+<p><span style="font-family: courier new,courier;">将生成<span style="color: #800000;">test</span>可执行文件。</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<p><span style="font-family: courier new,courier;">使用</span></p>
+<p><span style="color: #800000; font-family: courier new,courier;">$./test</span></p>
+<p><span style="font-family: courier new,courier;">执行程序</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<h3><span style="font-family: courier new,courier;">运行程序</span></h3>
+<p><span style="font-family: courier new,courier;">尽管我们成功编译了test可执行文件，但很有可能不能执行。一个可能是<span style="color: #ff0000;">权限问题</span>。我们需要有执行该文件的权限，见<a id="PostsList1_rpPosts_TitleUrl_12" href="http://www.cnblogs.com/vamei/archive/2012/09/09/2676792.html">Linux文件管理背景知识</a></span></p>
+<p><span style="font-family: courier new,courier;">另一个情况是:</span></p>
+<div class="cnblogs_code">
+<pre>./test: error while loading shared libraries: libmystack.so: cannot open shared object file: No such file or directory</pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: courier new,courier;">这是因为操作系统<span style="color: #ff0000;">无法找到库</span>。libmystack.so位于当前路径，位于库文件的默认路径之外。尽管我们在编译时(compile time)提供了.so文件的位置，但这个信息并没有写入test可执行文件(runtime)。可以使用下面命令测试:</span></p>
+<p><span style="color: #800000; font-family: courier new,courier;">$ldd test</span></p>
+<p><span style="font-family: courier new,courier;">ldd用于显示可执行文件所依赖的库。显示:</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">    linux-vdso.so.1 =&gt;  (0x00007fff31dff000)
+    libmystack.so =&gt; not found
+    libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007fca30de7000)
+    /lib64/ld-linux-x86-64.so.2 (0x00007fca311cb000)</span></pre>
+</div>
+<p><span style="font-family: courier new,courier;">这说明test可执行文件无法找到它所需的libmystack.so库文件。</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<p><span style="font-family: courier new,courier;">为了解决上面的问题，我们可以将.so文件<span style="color: #ff0000;">放入默认搜索路径</span>中。但有时，特别是多用户环境下，我们不享有在默认搜索路径写入的权限。</span></p>
+<p><span style="font-family: courier new,courier;">一个解决方案是设置<span style="color: #ff0000;"><span class="st">LD_LIBRARY_PATH</span>环境变量</span>。比如:</span></p>
+<p><span style="font-family: courier new,courier; color: #800000;">$export LD_LIBRARY_PATH=.</span></p>
+<p><span style="font-family: courier new,courier;">这样，可执行文件执行时，操作系统将在先在LD_LIBRARY_PATH下搜索库文件，再到默认路径中搜索。环境变量的坏处是，它会影响所有的可执行程序。如果我们在编译其他程序时，如果我们不小心，很可能导致其他可执行文件无法运行。因此，<span class="st">LD_LIBRARY_PATH</span>环境变量多用于测试。</span></p>
+<p><span style="font-family: courier new,courier;">另一个解决方案，即提供<span style="color: #ff0000;">-rpath选项</span>，将搜索路径信息写入test文件(rpath代表runtime path)。这样就不需要设置环境变量。这样做的坏处是，如果库文件移动位置，我们需要重新编译test。使用如下命令编译test.c:</span></p>
+<p><span style="color: #800000; font-family: courier new,courier;">$gcc -g -o test test.c -lmystack -L. -Wl,-rpath=.</span></p>
+<p><span style="font-family: courier new,courier;">-Wl表示，-rpath选项是传递给连接器(linker)。</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<p><span style="font-family: courier new,courier;">test顺利执行的结果为:</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">Stack is null? 0
+pop: 8
+pop: 2
+pop: 1
+Stack is null? 1</span><span style="font-family: courier new,courier;"><br /></span></pre>
+</div>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p>
+<p><span style="font-family: courier new,courier;">&nbsp;</span></p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+		</div>
+		<div class = "postDesc">posted @ <span id="post-date">2013-04-04 18:48</span> <a href='http://www.cnblogs.com/vamei/'>Vamei</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="http://i.cnblogs.com/EditPosts.aspx?postid=2998850" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(2998850);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=118754,cb_entryId=2998850,cb_blogApp=currentBlogApp,cb_blogUserGuid='3faf47ff-9ea8-e111-aa3f-842b2b196315',cb_entryCreatedDate='2013/4/4 18:48:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id='comment_form' class='commentform'>
+<a name='commentform'></a>
+<div id='divCommentShow'></div>
+<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
+<div id='comment_form_container'></div>
+<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
+<div id='ad_t2'></div>
+<div id='opt_under_post'></div>
+<div id='ad_c1' class='c_ad_block'></div>
+<div id='under_post_news'></div>
+<div id='ad_c2' class='c_ad_block'></div>
+<div id='under_post_kb'></div>
+<div id='HistoryToday' class='c_ad_block'></div>
+<script type='text/javascript'>
+$(function () {
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);    
+});
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright &copy;2016 Vamei
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+<!--PageEndHtml Block Begin-->
+<!-- Start of StatCounter Code for Default Guide -->
+<script type="text/javascript">
+var sc_project=9614694; 
+var sc_invisible=0; 
+var sc_security="a8f51f45"; 
+var scJsHost = (("https:" == document.location.protocol) ?
+"https://secure." : "http://www.");
+document.write("<sc"+"ript type='text/javascript' src='" +
+scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="website
+statistics" href="http://statcounter.com/"
+target="_blank"><img class="statcounter"
+src="http://c.statcounter.com/9614694/0/a8f51f45/0/"
+alt="website statistics"></a></div></noscript>
+<!-- End of StatCounter Code for Default Guide -->
+<!--PageEndHtml Block End-->
+</body>
+</html>

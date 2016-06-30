@@ -1,0 +1,21 @@
+sudo dpkg -r gstreamer1.0-plugins-bad:i386
+sudo dpkg -r libopencv-legacy2.4:i386
+sudo dpkg -r libopencv-contrib2.4:i386
+sudo dpkg -r libopencv-objdetect2.4:i386
+sudo dpkg -r libopencv-highgui2.4:i386
+
+--
+
+sudo dpkg -r libavformat-dev
+sudo dpkg -r libavformat54:i386
+
+--
+
+sudo dpkg -r libchromaprint-dev
+sudo dpkg -r libchromaprint0:i386
+
+sudo dpkg -r libavcodec-dev
+
+
+sudo dpkg -r libavcodec54:i386
+
