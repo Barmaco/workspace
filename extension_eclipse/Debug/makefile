@@ -8,10 +8,10 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include utils/subdir.mk
--include tinyxml/subdir.mk
--include net/subdir.mk
--include filemanager/subdir.mk
+-include src/utils/subdir.mk
+-include src/tinyxml/subdir.mk
+-include src/net/subdir.mk
+-include src/filemanager/subdir.mk
 -include examples/subdir.mk
 -include subdir.mk
 -include objects.mk

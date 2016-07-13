@@ -23,9 +23,9 @@ C_UPPER_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
-utils \
-tinyxml \
-net \
-filemanager \
+src/utils \
+src/tinyxml \
+src/net \
+src/filemanager \
 examples \
 
