@@ -121,6 +121,8 @@ void FileManager::read(std::string path)
 		fileinfo->analysis(pEle);
 		m_vFiles.push_back(fileinfo);
 	}
+
+	delete myDocument;
 }
 
 bool isscanning = false;
